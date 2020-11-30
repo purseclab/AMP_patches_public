@@ -1,8 +1,13 @@
+from argparse import ArgumentParser
 from patcherex.backends.detourbackend import DetourBackend
 from patcherex.patches import *
 
-backend = DetourBackend("./BrakeFlasher_AVR_Vuln.ino.elf")
+parser = ArgumentParser()
+parser.add_argument("original")
+parser.add_argument("patched")
+args = parser.parse_args()
 
+backend = DetourBackend(args.original)
 patches = []
 
 code = '''
@@ -21,6 +26,5 @@ patches.append(InlinePatch(0xfae, code))
 patches.append(InlinePatch(0xff4, "or r16, r17\nnop\n"))
 patches.append(InlinePatch(0xff8, "breq +0x16\n")) # 0xff8 + 0x16 = 0x100e
 
-
 backend.apply_patches(patches)
-backend.save("/tmp/Challenge01_Patched")
+backend.save(args.patched)

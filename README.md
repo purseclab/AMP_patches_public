@@ -32,3 +32,10 @@ cd Challenge_02
 ./patch.py /path/to/original_binary /tmp/patched_binary
 ```
 `/path/to/original_binary` should be the `Nucleo-32.elf` file (SHA256: `1B3ABBF957197A7557E59DE2AEA90EA334303086A38431D2CE94CBA7C9A35205`), from the `AMP_Challenge-Problems` repository.
+
+### Challenge_03
+```bash
+cd Challenge_03
+./patch.py /path/to/original_binary /tmp/patched_binary
+```
+`/path/to/original_binary` should be the `program_c` file (SHA256: `D5C40E53C28B373C4B8BFDFE7278E15EBDE33C4527AA526BBDF148818C17A218`), from the `AMP_Challenge-Problems` repository.

@@ -1,11 +1,23 @@
 from argparse import ArgumentParser
 from patcherex.backends.detourbackend import DetourBackend
 from patcherex.patches import *
+import os
+import subprocess
+
 
 parser = ArgumentParser()
 parser.add_argument("original")
 parser.add_argument("patched")
 args = parser.parse_args()
+
+try:
+	os.unlink(args.patched)
+except OSError:
+	pass
+try:
+	os.unlink(args.patched+".bin")
+except OSError:
+	pass
 
 backend = DetourBackend(args.original, variant="stm32")
 patches = []
@@ -40,3 +52,5 @@ transmit_code = typedef + transmit_code.replace("\n", " ")
 patches.append(ReplaceFunctionPatch(0x80003AC, 0x38, transmit_code))
 backend.apply_patches(patches)
 backend.save(args.patched)
+
+subprocess.Popen(" ".join(["arm-none-eabi-objcopy", "-O", "binary", args.patched, args.patched+".bin"]), shell=True)

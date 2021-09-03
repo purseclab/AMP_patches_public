@@ -39,3 +39,10 @@ cd Challenge_03
 python3 ./patch.py /path/to/original_binary /tmp/patched_binary
 ```
 `/path/to/original_binary` should be the `program_c` file (SHA256: `D5C40E53C28B373C4B8BFDFE7278E15EBDE33C4527AA526BBDF148818C17A218`), from the `AMP_Challenge-Problems` repository.
+
+### Challenge_05
+```bash
+cd Challenge_05
+python3 ./patch.py /path/to/original_binary /tmp/patched_binary
+```
+`/path/to/original_binary` should be the `program_c.gcc.vuln` file (SHA256: `CE582F72FE1416A3660A5E432B0B28BF533B2A76B83AB860B5F7DD5465977070`), from the `AMP_Challenge-Problems` repository.

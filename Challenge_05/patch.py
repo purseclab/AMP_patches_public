@@ -7,7 +7,7 @@ parser.add_argument("original")
 parser.add_argument("patched")
 args = parser.parse_args()
 
-backend = DetourBackend(args.original)
+backend = DetourBackend(args.original, replace_note_segment=True)
 patches = []
 
 # regenerate cfg with specified main function address
@@ -22,17 +22,12 @@ backend.ordered_nodes = backend._get_ordered_nodes(backend.cfg)
 #     > #include "EVP_aes_256_cbc.h"
 ################################################################
 
-# patches.append(ReplaceFunctionPatch(func.addr, 0xa6, code, symbols=symbols))
-# 0x177BC: EVP_CIPHER_CTX_new() in program_c.gcc.patch
-# 0x17988: EVP_aes_256_cbc()    in program_c.gcc.patch
-# 0x16620: EVP_CIPHER_CTX_new() in program_c.gcc.vuln
-# loc:     EVP_aes_256_cbc()    in program_c.gcc.vuln (0x16620 + (0x177BC - 0x17988))
-loc = hex(0x16620 + (0x177BC - 0x17988))
+EVP_aes_256_cbc_addr = hex(0x47f90)
 
 # 0x12564: "bl EVP_des_ede3_cbc" in encrypt()
-patches.append(InlinePatch(0x12564, "bl " + loc))
+patches.append(InlinePatch(0x12564, "bl " + EVP_aes_256_cbc_addr))
 # 0x125D0: "bl EVP_des_ede3_cbc" in decrypt()
-patches.append(InlinePatch(0x125D0, "bl " + loc))
+patches.append(InlinePatch(0x125D0, "bl " + EVP_aes_256_cbc_addr))
 
 
 ################################################################
@@ -170,3 +165,7 @@ patches.append(ReplaceFunctionPatch(0x123CC, 0xA8, header + write_encrypted, sym
 
 backend.apply_patches(patches)
 backend.save(args.patched)
+
+with open(args.patched, "r+b") as f:
+    f.seek(0x19E8FA)
+    f.write(b"\x0f\xf5\x44\xe4")

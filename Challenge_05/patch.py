@@ -144,20 +144,20 @@ void write_encrypted() {
 
 logging_setup_symbols = {"wfd": 0x1BE494,
                          "mblock": 0x1BC5A8,
-                         "fopen": 0xF40F4,
-                         "perror": 0xF36B8,
-                         "initialize_write": 0x122F8,
+                         "fopen": 0xF40F5,
+                         "perror": 0xF36B9,
+                         "initialize_write": 0x122F9,
                          }
 
 write_encrypted_symbols = {"wfd": 0x1BE494,
                            "mblock": 0x1BC5A8,
-                           "malloc": 0xFE05C,
+                           "malloc": 0xFE05D,
                            "memcpy": 0x10184,
-                           "fwrite": 0xF4480,
-                           "perror": 0xF36B8,
-                           "free": 0xFE4E4,
-                           "initialize_write": 0x122F8,
-                           "encrypt": 0x1254C,
+                           "fwrite": 0xF4481,
+                           "perror": 0xF36B9,
+                           "free": 0xFE4E5,
+                           "initialize_write": 0x122F9,
+                           "encrypt": 0x1254D,
                            }
 
 patches.append(ReplaceFunctionPatch(0x12360, 0x6C, header + logging_setup, symbols=logging_setup_symbols))
@@ -165,7 +165,3 @@ patches.append(ReplaceFunctionPatch(0x123CC, 0xA8, header + write_encrypted, sym
 
 backend.apply_patches(patches)
 backend.save(args.patched)
-
-with open(args.patched, "r+b") as f:
-    f.seek(0x19E8FA)
-    f.write(b"\x0f\xf5\x44\xe4")

@@ -11,10 +11,14 @@ pip3 install --upgrade pip
 
 # install dependencies
 sudo apt install nasm clang clang-10 gcc-avr binutils-avr avr-libc lld
-pip3 install git+https://github.com/angr/angr-platforms.git@wip/avr
+pip3 install git+https://github.com/mechaphish/povsim.git     \
+             git+https://github.com/mechaphish/compilerex.git \
+             git+https://github.com/angr/fidget.git           \
+             git+https://github.com/angr/tracer.git           \
+             git+https://github.com/angr/angr-platforms.git
 
 # install patcherex
-pip3 install git+https://github.com/angr/patcherex.git@feat/multiarch
+pip3 install git+https://github.com/angr/patcherex.git
 ```
 
 ## Usage

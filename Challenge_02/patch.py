@@ -52,5 +52,3 @@ transmit_code = typedef + transmit_code.replace("\n", " ")
 patches.append(ReplaceFunctionPatch(0x80003AC, 0x38, transmit_code))
 backend.apply_patches(patches)
 backend.save(args.patched)
-
-subprocess.Popen(["arm-none-eabi-objcopy", "-O", "binary", args.patched, args.patched+".bin"], shell=True)

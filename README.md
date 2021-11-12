@@ -18,7 +18,7 @@ pip3 install git+https://github.com/mechaphish/povsim.git     \
              git+https://github.com/angr/angr-platforms.git
 
 # install patcherex
-pip3 install git+https://github.com/angr/patcherex.git@feat/multiarch
+pip3 install git+https://github.com/angr/patcherex.git
 ```
 
 ## Usage

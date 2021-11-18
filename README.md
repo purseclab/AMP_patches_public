@@ -10,7 +10,7 @@ sudo apt install python3-pip
 pip3 install --upgrade pip
 
 # install dependencies
-sudo apt install nasm clang clang-10 gcc-avr binutils-avr avr-libc lld
+sudo apt install nasm clang clang-10 gcc-avr binutils-avr avr-libc lld linux-headers-$(uname -r) gcc-arm-none-eabi gcc-multilib
 pip3 install git+https://github.com/mechaphish/povsim.git     \
              git+https://github.com/mechaphish/compilerex.git \
              git+https://github.com/angr/fidget.git           \

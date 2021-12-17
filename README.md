@@ -26,14 +26,14 @@ pip3 install git+https://github.com/angr/patcherex.git
 ### Challenge_01
 ```bash
 cd Challenge_01
-./patch.py /path/to/original_binary /tmp/patched_binary
+python3 ./patch.py /path/to/original_binary /tmp/patched_binary
 ```
-`/path/to/original_binary` is supposed to be `BrakeFlasher_AVR_Vuln.ino.elf` (sha256: `6D23C15E2EA583A45DCCE52CDDA155E9D3838D4E4DC4C7588D200D5762FEAD61`), not included in this repository.
+`/path/to/original_binary` should be the `BrakeFlasher_AVR_Vuln.ino.elf` file (SHA256: `6D23C15E2EA583A45DCCE52CDDA155E9D3838D4E4DC4C7588D200D5762FEAD61`), from the `AMP_Challenge-Problems` repository.
 
 ### Challenge_02
 ```bash
 cd Challenge_02
-./patch.py /path/to/original_binary /tmp/patched_binary
+python3 ./patch.py /path/to/original_binary /tmp/patched_binary
 ```
 `/path/to/original_binary` should be the `Nucleo-32.elf` file (SHA256: `1B3ABBF957197A7557E59DE2AEA90EA334303086A38431D2CE94CBA7C9A35205`), from the `AMP_Challenge-Problems` repository.
 
@@ -50,3 +50,10 @@ cd Challenge_05
 python3 ./patch.py /path/to/original_binary /tmp/patched_binary
 ```
 `/path/to/original_binary` should be the `program_c.gcc.vuln` file (SHA256: `CE582F72FE1416A3660A5E432B0B28BF533B2A76B83AB860B5F7DD5465977070`), from the `AMP_Challenge-Problems` repository.
+
+### Challenge_06
+```bash
+cd Challenge_06
+python3 ./patch.py /path/to/original_binary /tmp/patched_binary
+```
+`/path/to/original_binary` should be the `program_c.gcc.vuln` file (SHA256: `05D6FD6CBF07B7116D611DAF33E7DA8AA655714A2571A51AFB44BE2FFFED3076`), from the `AMP_Challenge-Problems` repository.

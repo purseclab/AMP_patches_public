@@ -84,16 +84,13 @@ extern FILE * wfd;
  void *memset(void *, int, size_t);
  void initialize_write(unsigned char *, int);
 extern struct MBlock mblock;
+extern char * wb;
+extern char * perror_str;
 
 void logging_setup(char * log_name){
-    char wb[3];
-    wb[0] = 'w'; wb[1] = 'b'; wb[2] = 0;
-    char perror_str[43];
-    perror_str[0] = 'C'; perror_str[1] = 'o'; perror_str[2] = 'u'; perror_str[3] = 'l'; perror_str[4] = 'd'; perror_str[5] = ' '; perror_str[6] = 'n'; perror_str[7] = 'o'; perror_str[8] = 't'; perror_str[9] = ' '; perror_str[10] = 'c'; perror_str[11] = 'r'; perror_str[12] = 'e'; perror_str[13] = 'a'; perror_str[14] = 't'; perror_str[15] = 'e'; perror_str[16] = ' '; perror_str[17] = 'i'; perror_str[18] = 'n'; perror_str[19] = 'i'; perror_str[20] = 't'; perror_str[21] = 'i'; perror_str[22] = 'a'; perror_str[23] = 'l'; perror_str[24] = ' '; perror_str[25] = 'd'; perror_str[26] = 'e'; perror_str[27] = 's'; perror_str[28] = 'c'; perror_str[29] = 'r'; perror_str[30] = 'i'; perror_str[31] = 'p'; perror_str[32] = 't'; perror_str[33] = 'o'; perror_str[34] = 'r'; perror_str[35] = ' '; perror_str[36] = 'f'; perror_str[37] = 'o'; perror_str[38] = 'r'; perror_str[39] = ' '; perror_str[40] = '%'; perror_str[41] = 's'; perror_str[42] = 0;
-
     /* Open File Descriptor */
-     if ((wfd = fopen(log_name, wb)) == NULL)
-            perror(perror_str);
+     if ((wfd = fopen(log_name, &wb)) == NULL)
+            perror(&perror_str);
     /* Initialize the tally counts */
     memset(mblock.rx_counts, 0, sizeof (mblock.rx_counts));
     memset(mblock.can_rx_err_counts, 0, sizeof (mblock.can_rx_err_counts));
@@ -109,6 +106,8 @@ write_encrypted = '''
  void *memcpy(void *, const void *, size_t);
 extern struct MBlock mblock;
 extern FILE * wfd;
+extern char * perror_str0;
+extern char * perror_str1;
  size_t fwrite(const void *, size_t, size_t, FILE *);
  void perror(const char *);
  void free(void *);
@@ -116,11 +115,6 @@ extern FILE * wfd;
  int encrypt(unsigned char *, int, unsigned char *, unsigned char *, unsigned char *);
 
 void write_encrypted() {
-    char perror_str0[27];
-    perror_str0[0] = 'C'; perror_str0[1] = 'o'; perror_str0[2] = 'u'; perror_str0[3] = 'l'; perror_str0[4] = 'd'; perror_str0[5] = ' '; perror_str0[6] = 'n'; perror_str0[7] = 'o'; perror_str0[8] = 't'; perror_str0[9] = ' '; perror_str0[10] = 'w'; perror_str0[11] = 'r'; perror_str0[12] = 'i'; perror_str0[13] = 't'; perror_str0[14] = 'e'; perror_str0[15] = ' '; perror_str0[16] = 't'; perror_str0[17] = 'a'; perror_str0[18] = 'g'; perror_str0[19] = ' '; perror_str0[20] = 'l'; perror_str0[21] = 'e'; perror_str0[22] = 'n'; perror_str0[23] = 'g'; perror_str0[24] = 't'; perror_str0[25] = 'h'; perror_str0[26] = 0;
-    char perror_str1[37];
-    perror_str1[0] = 'C'; perror_str1[1] = 'o'; perror_str1[2] = 'u'; perror_str1[3] = 'l'; perror_str1[4] = 'd'; perror_str1[5] = ' '; perror_str1[6] = 'n'; perror_str1[7] = 'o'; perror_str1[8] = 't'; perror_str1[9] = ' '; perror_str1[10] = 'w'; perror_str1[11] = 'r'; perror_str1[12] = 'i'; perror_str1[13] = 't'; perror_str1[14] = 'e'; perror_str1[15] = ' '; perror_str1[16] = 'c'; perror_str1[17] = 'i'; perror_str1[18] = 'p'; perror_str1[19] = 'h'; perror_str1[20] = 'e'; perror_str1[21] = 'r'; perror_str1[22] = 't'; perror_str1[23] = 'e'; perror_str1[24] = 'x'; perror_str1[25] = 't'; perror_str1[26] = ' '; perror_str1[27] = 'o'; perror_str1[28] = 'f'; perror_str1[29] = ' '; perror_str1[30] = 'l'; perror_str1[31] = 'e'; perror_str1[32] = 'n'; perror_str1[33] = 'g'; perror_str1[34] = 't'; perror_str1[35] = 'h'; perror_str1[36] = 0;
-
     int bytes_written = 0;
     /* Allocate plaintext buffer, and fill with Mblock data */
     unsigned char *plaintext = (unsigned char *)malloc(sizeof(mblock));
@@ -131,10 +125,10 @@ void write_encrypted() {
     bytes_written = encrypt(plaintext, sizeof(mblock), KEY, IV, ciphertext);
     /* Write Mblock Length:Mblock */
     if (fwrite(&bytes_written, sizeof(int), 1, wfd) < 1) {
-        perror(perror_str0);
+        perror(&perror_str0);
     }
     if (fwrite(ciphertext, 1, bytes_written, wfd) < 1) {
-        perror(perror_str1);
+        perror(&perror_str1);
     }
     free(plaintext);
     free(ciphertext);
@@ -147,6 +141,8 @@ logging_setup_symbols = {"wfd": 0x1BE494,
                          "fopen": 0xF40F5,
                          "perror": 0xF36B9,
                          "initialize_write": 0x122F9,
+                         "wb": 0x1401B0,
+                         "perror_str": 0x1401B4,
                          }
 
 write_encrypted_symbols = {"wfd": 0x1BE494,
@@ -158,6 +154,8 @@ write_encrypted_symbols = {"wfd": 0x1BE494,
                            "free": 0xFE4E5,
                            "initialize_write": 0x122F9,
                            "encrypt": 0x1254D,
+                           "perror_str0": 0x1401E0,
+                           "perror_str1": 0x1401FC,
                            }
 
 patches.append(ReplaceFunctionPatch(0x12360, 0x6C, header + logging_setup, symbols=logging_setup_symbols))
